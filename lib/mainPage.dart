@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'loginPage.dart';
 import 'main.dart'; // ファイル名を正しく指定
 
 
@@ -172,16 +173,22 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: Colors.black,
     ),
       body: Body(items: items, userNames: userNames, descriptions: descriptions, userIcon: userIcon),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => MyHomePage()),
-      //     );
-      //   },
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
+      floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              // ログアウト処理
+              // 内部で保持しているログイン情報等が初期化される
+              // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
+              await FirebaseAuth.instance.signOut();
+              // ログイン画面に遷移＋チャット画面を破棄
+              await Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }),
+              );
+            },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

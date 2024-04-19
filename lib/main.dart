@@ -14,13 +14,62 @@ void main() async {
   runApp(MyApp());
 }
 
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       home: SiginPage(),
+//       theme: ThemeData.dark(), // ダークテーマを全体に適用
+//     );
+//   }
+// }
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      home: SiginPage(),
-      theme: ThemeData.dark(), // ダークテーマを全体に適用
+      home: RootPage(),
+      theme: ThemeData.dark(),
+    );
+  }
+}
+
+class RootPage extends StatefulWidget {
+  @override
+  _RootPageState createState() => _RootPageState();
+}
+
+class _RootPageState extends State<RootPage> {
+  final _auth = FirebaseAuth.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLogin();
+  }
+
+  void _checkLogin() async {
+    User? currentUser = _auth.currentUser;
+    if (currentUser != null) {
+      // User is logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MyHomePage(currentUser)),
+      );
+    } else {
+      // User is not logged in
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: CircularProgressIndicator()),  // Loading indicator while checking
     );
   }
 }
