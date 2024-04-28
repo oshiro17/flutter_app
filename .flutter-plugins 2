@@ -1,0 +1,16 @@
+# This is a generated file; do not edit or check into version control.
+camera=/Users/panti/.pub-cache/hosted/pub.dev/camera-0.10.5+5/
+camera_android=/Users/panti/.pub-cache/hosted/pub.dev/camera_android-0.10.8+13/
+camera_avfoundation=/Users/panti/.pub-cache/hosted/pub.dev/camera_avfoundation-0.9.13+7/
+camera_web=/Users/panti/.pub-cache/hosted/pub.dev/camera_web-0.3.2+2/
+cloud_firestore=/Users/panti/.pub-cache/hosted/pub.dev/cloud_firestore-4.14.0/
+cloud_firestore_web=/Users/panti/.pub-cache/hosted/pub.dev/cloud_firestore_web-3.9.0/
+firebase_auth=/Users/panti/.pub-cache/hosted/pub.dev/firebase_auth-4.16.0/
+firebase_auth_web=/Users/panti/.pub-cache/hosted/pub.dev/firebase_auth_web-5.8.13/
+firebase_core=/Users/panti/.pub-cache/hosted/pub.dev/firebase_core-2.24.2/
+firebase_core_web=/Users/panti/.pub-cache/hosted/pub.dev/firebase_core_web-2.10.0/
+flutter_plugin_android_lifecycle=/Users/panti/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.17/
+video_player=/Users/panti/.pub-cache/hosted/pub.dev/video_player-2.7.2/
+video_player_android=/Users/panti/.pub-cache/hosted/pub.dev/video_player_android-2.4.10/
+video_player_avfoundation=/Users/panti/.pub-cache/hosted/pub.dev/video_player_avfoundation-2.4.11/
+video_player_web=/Users/panti/.pub-cache/hosted/pub.dev/video_player_web-2.0.17/

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'postPage.dart';
 import 'package:video_player/video_player.dart';
 import 'loginPage.dart';
 import 'main.dart'; // ファイル名を正しく指定
@@ -56,6 +57,28 @@ class _BodyState extends State<Body> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
+  Padding(
+  padding: const EdgeInsets.all(20.0),
+  child: InkWell(
+     // タップされたときのアクション
+        onTap: (){
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BeRealStyleCameraPage()),
+          );
+        },
+    child: Container(
+    padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+    decoration: BoxDecoration(
+      color: Colors.black,  // テキストの背景色
+      border: Border.all(color: Colors.white, width: 2),  // 白い枠線
+      borderRadius: BorderRadius.circular(10),  // 枠の角を丸く
+    ),
+    child: Text("投稿する", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
+  ),
+),),
+
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -174,18 +197,14 @@ class MyHomePage extends StatelessWidget {
     ),
       body: Body(items: items, userNames: userNames, descriptions: descriptions, userIcon: userIcon),
       floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              // ログアウト処理
-              // 内部で保持しているログイン情報等が初期化される
-              // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
-              await FirebaseAuth.instance.signOut();
-              // ログイン画面に遷移＋チャット画面を破棄
-              await Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }),
-              );
-            },
+        onPressed: () async{
+          await FirebaseAuth.instance.signOut();
+
+          await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

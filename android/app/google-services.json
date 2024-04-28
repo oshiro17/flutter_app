@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "763114439358",
-    "project_id": "book-list-sample-2ec19",
-    "storage_bucket": "book-list-sample-2ec19.appspot.com"
+    "project_number": "635278885853",
+    "project_id": "be-real-1443a",
+    "storage_bucket": "be-real-1443a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:763114439358:android:71670b693bc647a9ea54ef",
+        "mobilesdk_app_id": "1:635278885853:android:82c0618b6542249b086c34",
         "android_client_info": {
           "package_name": "com.example.flutter_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA3yAKvqyKjdHnSEn5vhNa9fd8x5PEA4h4"
+          "current_key": "AIzaSyDsLeO44hmh7riWOyBRoKzjvfeeIpQ2PRo"
         }
       ],
       "services": {
