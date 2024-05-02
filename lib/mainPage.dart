@@ -111,11 +111,11 @@ class _BodyState extends State<Body> {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              border: Border.all(color: Colors.white, width: 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                            // decoration: BoxDecoration(
+                            //   color: Colors.black,
+                            //   // border: Border.all(color: Colors.white, width: 1),
+                            //   // borderRadius: BorderRadius.circular(10),
+                            // ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: AspectRatio(
