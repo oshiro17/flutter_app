@@ -50,20 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDsLeO44hmh7riWOyBRoKzjvfeeIpQ2PRo',
-    appId: '1:635278885853:android:82c0618b6542249b086c34',
-    messagingSenderId: '635278885853',
-    projectId: 'be-real-1443a',
-    storageBucket: 'be-real-1443a.appspot.com',
+    apiKey: 'AIzaSyA3yAKvqyKjdHnSEn5vhNa9fd8x5PEA4h4',
+    appId: '1:763114439358:android:71670b693bc647a9ea54ef',
+    messagingSenderId: '763114439358',
+    projectId: 'book-list-sample-2ec19',
+    storageBucket: 'book-list-sample-2ec19.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCDSY7xn12jCtmJP0TtLRu1w4daX6Vp5FM',
-    appId: '1:635278885853:ios:cf2a314906d1db03086c34',
-    messagingSenderId: '635278885853',
-    projectId: 'be-real-1443a',
-    storageBucket: 'be-real-1443a.appspot.com',
-    iosBundleId: 'com.example.bemorereal',
+    apiKey: 'AIzaSyCRV5teSRlOsumhKcByiYX5CtnOOG6VVZo',
+    appId: '1:763114439358:ios:b4d44659a544a4e3ea54ef',
+    messagingSenderId: '763114439358',
+    projectId: 'book-list-sample-2ec19',
+    storageBucket: 'book-list-sample-2ec19.appspot.com',
+    iosBundleId: 'com.example.flutterApp',
   );
-
 }
