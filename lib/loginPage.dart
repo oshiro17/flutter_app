@@ -115,16 +115,52 @@ class _LoginPageState extends State<LoginPage> {
                   child: Text('ログイン'),
                 ),
                 SizedBox(height: 20),
-                Text(infoText, style: TextStyle(color: Colors.red)),
-                TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SiginPage()),
-          );
-        },
-                  child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
-                )
+InkWell(
+  onTap: () => WidgetsBinding.instance.addPostFrameCallback(
+    (_) => Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TestPage()),
+    ),
+  ),
+  child: Text('Go to Test Page'),
+),
+
+//   InkWell(
+//   onTap: () {
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) => TestPage()),
+//       );
+//     });
+//   },
+//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
+// ),
+
+// InkWell(
+//   onTap: () {
+//     WidgetsBinding.instance.addPostFrameCallback((_) {
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) => SiginPage()),
+//       );
+//     });
+//   },
+//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
+// InkWell(
+//   onTap: () {
+//     Future.microtask(() =>
+//       Navigator.push(
+//         context,
+//         MaterialPageRoute(builder: (context) => TestPage()),
+//       )
+//     );
+//   },
+//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
+// ),
+
+
+
               ],
             ),
           ),

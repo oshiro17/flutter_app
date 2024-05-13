@@ -2,38 +2,64 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'mainPage.dart'; 
+import 'mainPage.dart';
 import 'loginPage.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(MyApp());
 }
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: FutureBuilder(
+        future: Firebase.initializeApp(
+          options: DefaultFirebaseOptions.currentPlatform,
+        ),
+        builder: (context, snapshot) {
+          // Firebaseの初期化が完了したかチェック
+          if (snapshot.connectionState == ConnectionState.done) {
+            return RootPage();
+          }
+
+          // Firebaseの初期化中に表示する画面
+          return Center(child: TestPage());
+        },
+      ),
+    );
+  }
+}
+
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
+//   runApp(MyApp());
+// }
+
+class TestPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('Hello World', style: TextStyle(fontSize: 24)),
+      ),
+    );
+  }
+}
 // class MyApp extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
 //     return MaterialApp(
 //       title: 'Flutter Demo',
-//       home: SiginPage(),
-//       theme: ThemeData.dark(), // ダークテーマを全体に適用
+//       home: RootPage(),
+//       theme: ThemeData.dark(),
 //     );
 //   }
 // }
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: RootPage(),
-      theme: ThemeData.dark(),
-    );
-  }
-}
 
 class RootPage extends StatefulWidget {
   @override
@@ -46,7 +72,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-    _checkLogin();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkLogin());
   }
 
   void _checkLogin() async {
@@ -61,7 +87,7 @@ class _RootPageState extends State<RootPage> {
       // User is not logged in
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => SiginPage()),
       );
     }
   }
@@ -69,10 +95,11 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: CircularProgressIndicator()),  // Loading indicator while checking
+      body: Center(child: CircularProgressIndicator()), // Loading indicator while checking
     );
   }
 }
+
 
 class SiginPage extends StatefulWidget {
   const SiginPage({super.key});
@@ -82,7 +109,7 @@ class SiginPage extends StatefulWidget {
 }
 
 class _SiginPageState extends State<SiginPage> {
-  final _formKey = GlobalKey<FormState>();  // フォームのキー
+  final _formKey = GlobalKey<FormState>(); // フォームのキー
   String newUserEmail = "";
   String newUserPassword = "";
   String infoText = "";
@@ -100,7 +127,11 @@ class _SiginPageState extends State<SiginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text('ようこそ　BeMoreeRealへ', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white)),
+                Text('ようこそ　BeMoreeRealへ',
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
                 SizedBox(height: 30),
                 TextFormField(
                   style: TextStyle(color: Colors.white),
@@ -165,11 +196,11 @@ class _SiginPageState extends State<SiginPage> {
                           email: newUserEmail,
                           password: newUserPassword,
                         );
-						await Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) {
-                          return MyHomePage(result.user!);
-                        }),
-                      );
+                        await Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) {
+                            return MyHomePage(result.user!);
+                          }),
+                        );
                         // final User user = result.user!;
                         // setState(() {
                         //   infoText = "登録OK：${user.email}";
@@ -182,37 +213,41 @@ class _SiginPageState extends State<SiginPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 50),
                   ),
                   child: Text('新規登録'),
                 ),
                 SizedBox(height: 20),
                 Text(infoText, style: TextStyle(color: Colors.red)),
+                //ログインはこちら
                 TextButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-          );
-        },
-                  child: Text('ログインはこちら', style: TextStyle(color: Colors.grey[400])),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: Text('ログインはこちら',
+                      style: TextStyle(color: Colors.grey[400])),
                 )
               ],
             ),
           ),
         ),
       ),
-    //   floatingActionButton: FloatingActionButton(
-    //     onPressed: () {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(builder: (context) => MyHomePage()),
-    //       );
-    //     },
-    //     tooltip: 'Increment',
-    //     child: const Icon(Icons.add),
-    //   ),
+      //   floatingActionButton: FloatingActionButton(
+      //     onPressed: () {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => MyHomePage()),
+      //       );
+      //     },
+      //     tooltip: 'Increment',
+      //     child: const Icon(Icons.add),
+      //   ),
     );
   }
 }
