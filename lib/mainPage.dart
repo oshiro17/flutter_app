@@ -1,21 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/postPage.dart';
 import 'package:video_player/video_player.dart';
 import 'loginPage.dart';
 import 'main.dart'; // ファイル名を正しく指定
 
-
-
 class Body extends StatefulWidget {
-final List<String> items;
-final List<String> userNames;
-final List<String> descriptions;
-final List<String> userIcon;
+  final List<String> items;
+  final List<String> userNames;
+  final List<String> descriptions;
+  final List<String> userIcon;
 
-const Body({super.key, required this.items, required this.userNames, required this.descriptions, required this.userIcon});
+  const Body({super.key, required this.items, required this.userNames, required this.descriptions, required this.userIcon});
 
-@override
-_BodyState createState() => _BodyState();
+  @override
+  _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
@@ -32,11 +31,13 @@ class _BodyState extends State<Body> {
     _controllers = List.generate(widget.items.length, (index) {
       return VideoPlayerController.asset(widget.items[index])
         ..initialize().then((_) {
-          setState(() {
-            _isInitialized[index] = true;
-            _controllers[index].setLooping(true);
-            _controllers[index].pause();
-          });
+          if (mounted) {
+            setState(() {
+              _isInitialized[index] = true;
+              _controllers[index].setLooping(true);
+              _controllers[index].pause();
+            });
+          }
         });
     });
     _isInitialized = List.filled(widget.items.length, false);
@@ -73,26 +74,22 @@ class _BodyState extends State<Body> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        setState(() {
-                          if (_isInitialized[index]) {
-                            if (_controllers[index].value.isPlaying) {
-                              _controllers[index].pause();
-                            } else {
-                              _controllers[index].play();
+                        if (mounted) {
+                          setState(() {
+                            if (_isInitialized[index]) {
+                              if (_controllers[index].value.isPlaying) {
+                                _controllers[index].pause();
+                              } else {
+                                _controllers[index].play();
+                              }
                             }
-                          }
-                        });
+                          });
+                        }
                       },
-
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
                           Container(
-                            // decoration: BoxDecoration(
-                            //   color: Colors.black,
-                            //   // border: Border.all(color: Colors.white, width: 1),
-                            //   // borderRadius: BorderRadius.circular(10),
-                            // ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: AspectRatio(
@@ -130,7 +127,6 @@ class _BodyState extends State<Body> {
 class MyHomePage extends StatelessWidget {
   MyHomePage(this.user);
    final User user;
-  // const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -168,24 +164,20 @@ class MyHomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar:AppBar(
-      title: Text('${user.email}'),
-      backgroundColor: Colors.black,
-    ),
+      appBar: AppBar(
+        title: Text('${user.email}'),
+        backgroundColor: Colors.black,
+      ),
       body: Body(items: items, userNames: userNames, descriptions: descriptions, userIcon: userIcon),
       floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              // ログアウト処理
-              // 内部で保持しているログイン情報等が初期化される
-              // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
-              await FirebaseAuth.instance.signOut();
-              // ログイン画面に遷移＋チャット画面を破棄
-              await Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) {
-                  return LoginPage();
-                }),
-              );
-            },
+        onPressed: () async {
+          await FirebaseAuth.instance.signOut();
+          await Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) {
+              return BeRealStyleCameraPage();
+            }),
+          );
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),

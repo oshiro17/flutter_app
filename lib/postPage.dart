@@ -29,7 +29,9 @@ class _BeRealStyleCameraPageState extends State<BeRealStyleCameraPage> {
     final firstCamera = cameras.first;
     _cameraController = CameraController(firstCamera, ResolutionPreset.medium);
     _initializeControllerFuture = _cameraController!.initialize().then((_) {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -42,6 +44,11 @@ class _BeRealStyleCameraPageState extends State<BeRealStyleCameraPage> {
   void _toggleRecording() {
     if (_isRecording) {
       _cameraController?.stopVideoRecording().then((file) {
+        if (mounted) {
+          setState(() {
+            _isRecording = false;
+          });
+        }
         // 動画を再生するページにナビゲートする（ビデオ再生ページは別途実装が必要です）
         // Navigator.push(
         //   context,
@@ -51,11 +58,14 @@ class _BeRealStyleCameraPageState extends State<BeRealStyleCameraPage> {
         // );
       });
     } else {
-      _cameraController?.startVideoRecording();
+      _cameraController?.startVideoRecording().then((_) {
+        if (mounted) {
+          setState(() {
+            _isRecording = true;
+          });
+        }
+      });
     }
-    setState(() {
-      _isRecording = !_isRecording;
-    });
   }
 
   Widget _buildCameraPreview() {
@@ -82,14 +92,12 @@ class _BeRealStyleCameraPageState extends State<BeRealStyleCameraPage> {
                 child: Container(
                   margin: EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
-                    color: Colors.green, // コンテナの色を緑に設定
                     borderRadius: BorderRadius.circular(10), // 角を丸くする
                     border: Border.all(color: Colors.white, width: 3), // 白い枠を追加
                   ),
                   child: _buildCameraPreview(), // カメラプレビューを追加
                 ),
               ),
-              // オーバーレイのコントロールはここに追加
             ],
           ),
           Padding(

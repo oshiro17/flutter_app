@@ -5,7 +5,6 @@ import 'firebase_options.dart';
 import 'main.dart';
 import 'mainPage.dart';  // ファイル名を正しく指定してください
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -14,14 +13,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String newUserEmail = "";
-  // 入力されたパスワード
-  String newUserPassword = "";
-  // 入力されたメールアドレス（ログイン）
   String loginUserEmail = "";
-  // 入力されたパスワード（ログイン）
   String loginUserPassword = "";
-  // 登録・ログインに関する情報を表示
   String infoText = "";
 
   @override
@@ -52,11 +45,11 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                onChanged: (String value) {
-                  setState(() {
-                    loginUserEmail = value;
-                  });
-                },
+                  onChanged: (String value) {
+                    setState(() {
+                      loginUserEmail = value;
+                    });
+                  },
                 ),
                 SizedBox(height: 20),
                 TextFormField(
@@ -74,108 +67,63 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                onChanged: (String value) {
-                  setState(() {
-                    loginUserPassword = value;
-                  });
-                },
+                  onChanged: (String value) {
+                    setState(() {
+                      loginUserPassword = value;
+                    });
+                  },
                 ),
                 SizedBox(height: 40),
                 ElevatedButton(
-    onPressed: () async {
-                  try {
-                    // メール/パスワードでログイン
-                    final FirebaseAuth auth = FirebaseAuth.instance;
-                    final UserCredential result =
-                        await auth.signInWithEmailAndPassword(
-                      email: loginUserEmail,
-                      password: loginUserPassword,
-                    );
-                    // ログインに成功した場合
-                     await Navigator.of(context).pushReplacement(
+                  onPressed: () async {
+                    try {
+                      final FirebaseAuth auth = FirebaseAuth.instance;
+                      final UserCredential result =
+                          await auth.signInWithEmailAndPassword(
+                        email: loginUserEmail,
+                        password: loginUserPassword,
+                      );
+                      final User user = result.user!;
+                      if (mounted) {
+                        setState(() {
+                          infoText = "ログインOK：${user.email}";
+                        });
+                      }
+                      await Navigator.of(context).pushReplacement(
                         MaterialPageRoute(builder: (context) {
-                          return MyHomePage(result.user!);
+                          return MyHomePage(user);
                         }),
                       );
-                    final User user = result.user!;
-                    setState(() {
-                      infoText = "ログインOK：${user.email}";
-                    });
-                  } catch (e) {
-                    // ログインに失敗した場合
-                    setState(() {
-                      infoText = "ログインNG：${e.toString()}";
-                    });
-                  }
-                },
+                    } catch (e) {
+                      if (mounted) {
+                        setState(() {
+                          infoText = "ログインNG：${e.toString()}";
+                        });
+                      }
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black, backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.white,
                     minimumSize: Size(double.infinity, 50),
                   ),
                   child: Text('ログイン'),
                 ),
                 SizedBox(height: 20),
-InkWell(
-  onTap: () => WidgetsBinding.instance.addPostFrameCallback(
-    (_) => Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TestPage()),
-    ),
-  ),
-  child: Text('Go to Test Page'),
-),
-
-//   InkWell(
-//   onTap: () {
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       Navigator.push(
-//         context,
-//         MaterialPageRoute(builder: (context) => TestPage()),
-//       );
-//     });
-//   },
-//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
-// ),
-
-// InkWell(
-//   onTap: () {
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       Navigator.push(
-//         context,
-//         MaterialPageRoute(builder: (context) => SiginPage()),
-//       );
-//     });
-//   },
-//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
-// InkWell(
-//   onTap: () {
-//     Future.microtask(() =>
-//       Navigator.push(
-//         context,
-//         MaterialPageRoute(builder: (context) => TestPage()),
-//       )
-//     );
-//   },
-//   child: Text('新規登録はこちら', style: TextStyle(color: Colors.grey[400])),
-// ),
-
-
-
+                InkWell(
+                  onTap: () => WidgetsBinding.instance.addPostFrameCallback(
+                    (_) => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SiginPage()),
+                    ),
+                  ),
+                  child: Text('Go to Test Page'),
+                ),
               ],
             ),
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => MyHomePage()),
-      //     );
-      //   },
-      //   tooltip: 'Increment',
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
