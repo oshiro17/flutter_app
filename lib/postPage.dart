@@ -56,6 +56,13 @@ class _BeRealStyleCameraPageState extends State<BeRealStyleCameraPage> {
         //     builder: (context) => VideoPlaybackPage(videoFile: file),
         //   ),
         // );
+      }).catchError((e) {
+        // 録画が行われていない場合のエラーハンドリング
+        if (mounted) {
+          setState(() {
+            _isRecording = false;
+          });
+        }
       });
     } else {
       _cameraController?.startVideoRecording().then((_) {

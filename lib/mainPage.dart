@@ -165,9 +165,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('${user.email}'),
-        backgroundColor: Colors.black,
-      ),
+      title: const Text('BeMoreReal.',style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.black,
+    ),
       body: Body(items: items, userNames: userNames, descriptions: descriptions, userIcon: userIcon),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

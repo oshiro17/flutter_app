@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             return RootPage();
           }
-
           // Firebaseの初期化中に表示する画面
           return Center(child: TestPage());
         },
@@ -31,15 +30,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
-//   );
-//   runApp(MyApp());
-// }
-
 class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -50,16 +40,6 @@ class TestPage extends StatelessWidget {
     );
   }
 }
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       home: RootPage(),
-//       theme: ThemeData.dark(),
-//     );
-//   }
-// }
 
 class RootPage extends StatefulWidget {
   @override
@@ -201,10 +181,6 @@ class _SiginPageState extends State<SiginPage> {
                             return MyHomePage(result.user!);
                           }),
                         );
-                        // final User user = result.user!;
-                        // setState(() {
-                        //   infoText = "登録OK：${user.email}";
-                        // });
                       } catch (e) {
                         setState(() {
                           infoText = "登録出来まてんでちた。もう、登録されているかも。。";
@@ -238,16 +214,6 @@ class _SiginPageState extends State<SiginPage> {
           ),
         ),
       ),
-      //   floatingActionButton: FloatingActionButton(
-      //     onPressed: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => MyHomePage()),
-      //       );
-      //     },
-      //     tooltip: 'Increment',
-      //     child: const Icon(Icons.add),
-      //   ),
     );
   }
 }
@@ -258,7 +224,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('BeMoreReal.'),
+      title: const Text('BeMoreReal.',style: TextStyle(color: Colors.white)),
       backgroundColor: Colors.black,
     );
   }
